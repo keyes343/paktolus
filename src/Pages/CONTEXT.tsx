@@ -6,12 +6,22 @@ import firebase from './firebase';
 // import axios from 'axios';
 
 import Homepage from './Homepage';
-import { t } from '../Types';
+
+export type User = {
+    displayName: string;
+    email: string | null;
+    emailVerified: boolean;
+    phoneNumber: string | null;
+    photoURL?: string;
+    refreshToken?: string;
+    uid?: string;
+};
 
 export interface ContextDesktopProps {}
 
 export enum act {
     spin = 'spin',
+    user = 'user',
 }
 
 export type SpinRecord = {
@@ -23,7 +33,7 @@ export type SpinRecord = {
 };
 
 export type initialState_type = {
-    loggedIn: boolean;
+    user: false | User;
     spinCounter: number;
     spinRecorder: SpinRecord[];
     balance: number;
@@ -61,6 +71,12 @@ const reducer = (
                 }
             }
             payload && newState.spinRecorder.push(payload);
+            const str = newState.balance.toString();
+            console.log({ str });
+            localStorage.setItem('balance', str);
+            break;
+        case act.user:
+            newState.user = payload ?? false;
             break;
         default:
             break;
@@ -69,10 +85,10 @@ const reducer = (
 };
 // ------------------------------------------------------- STATE
 const initialState: initialState_type = {
-    loggedIn: false,
+    user: false,
     spinCounter: 0,
     spinRecorder: [],
-    balance: 50,
+    balance: 99.99,
 };
 export const c2state = React.createContext<initialState_type | null>(null);
 export const c2dispatch =
@@ -84,6 +100,13 @@ export const c2dispatch =
 // ------------------------------------------------------ CONTEXT
 const Context: React.FC<ContextDesktopProps> = () => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
+
+    React.useEffect(() => {
+        // TRACKS AUTH CHANGE VIA FIREBASE
+        firebase.auth().onAuthStateChanged((u) => {
+            dispatch({ type: act.user, payload: u });
+        });
+    }, []);
 
     return (
         <c2state.Provider value={{ ...state }}>

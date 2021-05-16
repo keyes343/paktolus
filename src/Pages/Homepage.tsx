@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Box, Button, Grid } from '@material-ui/core';
 import GameModal from './Homepage/GameModal';
 import Table from './Homepage/Table';
+import Navbar from './Homepage/Navbar';
 import { sty } from './styles';
 import * as c from './CONTEXT';
 
@@ -17,7 +18,6 @@ const Homepage: React.FC<HomepageProps> = () => {
         <Box
             style={{
                 minHeight: '100vh',
-                border: '3px solid red',
                 padding: '0 0 10rem',
             }}
         >
@@ -31,7 +31,7 @@ const Homepage: React.FC<HomepageProps> = () => {
                 />
             ) : null}
 
-            <Box style={{ ...sty.navBar }}>This is nav area</Box>
+            <Navbar />
             <Box style={{ ...sty.middleArea }}>
                 <Grid container direction="row" justify="space-around">
                     <Grid item>
@@ -44,20 +44,13 @@ const Homepage: React.FC<HomepageProps> = () => {
                             Play
                         </Button>
                     </Grid>
-
-                    <Grid
-                        container
-                        item
-                        direction="column"
-                        justify="center"
-                        style={{ width: 'auto' }}
-                    >
-                        My Current Balance = $ {state.balance}
-                    </Grid>
                 </Grid>
                 <Table />
             </Box>
-            <Box style={{ ...sty.footer }}>Footer area</Box>
+            <Box style={{ ...sty.footer }}>
+                <span style={{ fontSize: 'inherit' }}>&#169;</span>
+                Copyright
+            </Box>
         </Box>
     );
 };

@@ -9,7 +9,11 @@ export type Classs =
     | 'spinnerChild'
     | 'numHolder'
     | 'table'
-    | 'tableColumn';
+    | 'tableColumn'
+    | 'navBar'
+    | 'navGrid'
+    | 'navGridItem'
+    | 'logButton';
 
 export const sty: {
     [x in Classs]: CSS.Properties;
@@ -28,6 +32,19 @@ export const sty: {
         boxShadow: '0 0 20px 3px rgba(0,0,0,0.6)',
         backgroundColor: 'white',
         overflow: 'hidden',
+    },
+    navBar: {
+        // border:'2px solid red',
+        height: '6rem',
+        backgroundColor: 'lightblue',
+        zIndex: -10,
+    },
+    navGrid: {
+        height: '100%',
+    },
+    navGridItem: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     grid: {
         position: 'absolute',
@@ -70,5 +87,11 @@ export const sty: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    logButton: {
+        border: '2px solid #6666fa',
+        borderRadius: '5px',
+        padding: '0.3rem 0.6rem',
+        cursor: 'pointer',
     },
 };
