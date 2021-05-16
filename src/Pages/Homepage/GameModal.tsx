@@ -114,7 +114,7 @@ const GameModal: React.FC<GameModalProps> = ({ x }) => {
                                     one: random1,
                                     two: random2,
                                     three: random3,
-                                    id: Math.floor(Math.random() * 10000000),
+                                    id: state.spinCounter + 1,
                                     time: Date.now(),
                                 } as c.SpinRecord,
                             });
